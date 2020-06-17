@@ -33,8 +33,8 @@ body {
 	padding: 0;
 	width: 80%;
 	background: white;
-	box-shadow: 0 3px 8px -6px rgba(0, 0, 0, 0.1);
 	font-size: 21px;
+	box-shadow: inset 0 0 0 1px rgba(0,0,0,.16), 0 1px 3px rgba(0,0,0,.06);
 }
 
 .title-ul li {
@@ -47,18 +47,18 @@ body {
 }
 
 .title-ul li:hover {
-	background-color: #eee;
+	background-color: #98afee;
 }
 
 .title-ul li a {
-	color: #2a6496;
+	color: #666;
 	text-decoration: none;
 	display: block;
 	padding: 20px 15px;
 }
 
 .title-ul li a:hover {
-	text-decoration: underline;
+	color: white;
 }
 
 .title-ul li:last-child {
@@ -69,4 +69,14 @@ body {
 	display: flex;
 	flex-direction: column;
 	text-align: center;
+	font-size: 21px;
 }
+
+.fa {
+	text-shadow: 0 1px 5px rgba(0,0,0,.7);
+}
+
+.iconbtn a {
+	color: black;
+}
+
