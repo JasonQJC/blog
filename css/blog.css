@@ -1,0 +1,72 @@
+html {
+	background-color: #e6e9eb;
+	background-image: url(../img/bg.jpg);
+	background-repeat: repeat;
+}
+
+body {
+	margin: 0;
+	font-family: PingFang SC, Helvetica Neue, Helvetica, Arial, Hiragino Sans GB, Microsoft Yahei, \\5FAE\8F6F\96C5\9ED1, STHeiti, \\534E\6587\7EC6\9ED1, sans-serif;
+}
+
+.con {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.con h1 {
+	margin-bottom: 0px;
+}
+
+.ul-con {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.title-ul {
+	border: 1px solid #dcdcdc;
+	border-color: rgba(0, 0, 0, 0.14);
+	border-radius: 5px;
+	padding: 0;
+	width: 80%;
+	background: white;
+	box-shadow: 0 3px 8px -6px rgba(0, 0, 0, 0.1);
+	font-size: 21px;
+}
+
+.title-ul li {
+	list-style: none;
+	border-bottom: 1px solid #ececec;
+	padding: 0;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.title-ul li:hover {
+	background-color: #eee;
+}
+
+.title-ul li a {
+	color: #2a6496;
+	text-decoration: none;
+	display: block;
+	padding: 20px 15px;
+}
+
+.title-ul li a:hover {
+	text-decoration: underline;
+}
+
+.title-ul li:last-child {
+	border-bottom: none;
+}
+
+.iconbtn {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
