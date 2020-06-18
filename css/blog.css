@@ -59,6 +59,7 @@ body {
 
 .title-ul li a:hover {
 	color: white;
+	font-weight: bolder;
 }
 
 .title-ul li:last-child {
