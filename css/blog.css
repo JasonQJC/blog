@@ -19,22 +19,43 @@ body {
 	margin-bottom: 0px;
 }
 
-.ul-con {
+.center-con {
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	width: 100%;
 }
 
 .title-ul {
-	border: 1px solid #dcdcdc;
-	border-color: rgba(0, 0, 0, 0.14);
-	border-radius: 5px;
 	padding: 0;
 	width: 80%;
 	background: white;
 	font-size: 21px;
+}
+
+.con-box-shadow {
 	box-shadow: inset 0 0 0 1px rgba(0,0,0,.16), 0 1px 3px rgba(0,0,0,.06);
+}
+
+.con-border {
+	border: 1px solid #dcdcdc;
+	border-color: rgba(0, 0, 0, 0.14);
+	border-radius: 5px;
+}
+
+.rotateDivOuter {
+	cursor: pointer;
+	padding: 3px;
+}
+
+.rotateDiv {
+	background: white;
+	transition: transform .2s;
+}
+
+.hoverShadow:hover {
+	box-shadow: 0 0 30px 20px #ccc;
 }
 
 .title-ul li {

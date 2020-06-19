@@ -1,30 +1,21 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Chan's Blog</title>
-		<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-		<link type="text/css" rel="stylesheet" href="css/blog.css"/>
-	</head>
-	<body>
-		<div class="con">
+
+<head>
+	<meta charset="utf-8">
+	<title>Chan's Blog</title>
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+		integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<link type="text/css" rel="stylesheet" href="css/blog.css" />
+</head>
+
+<body>
+	<div class="con">
 		<!-- <div>
 			<h1>Useless Things</h1>
 		</div> -->
-		<div class="ul-con">
-			<ul class="title-ul">
-				<li>
-					<a href="http://bing.com" target="_blank">标题1</a>
-				</li>
-				<li>
-					<a href="http://bing.com" target="_blank">标题1</a>
-				</li>
-				<li>
-					<a href="http://bing.com" target="_blank">标题1</a>
-				</li>
-				<li>
-					<a href="http://bing.com" target="_blank">标题1</a>
-				</li>
+		<div class="center-con">
+			<ul class="title-ul con-box-shadow con-border">
 				<li>
 					<a href="http://bing.com" target="_blank">标题1</a>
 				</li>
@@ -35,14 +26,46 @@
 					<a href="http://bing.com" target="_blank">标题1</a>
 				</li>
 			</ul>
+			<div class="rotateDivOuter con-border">
+				<div class="rotateDiv con-box-shadow hoverShadow" >
+					<div>
+						<img src="img/banner_01.jpg" alt="banner_01" style="width: 600px;">
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="botm-con">
 			<div class="iconbtn">
-				<a href="https://twitter.com/JasonQJcccc" target="_blank" >
-					<i class="fa fa-twitter fa-3x"></i>
+				<a href="https://twitter.com/JasonQJcccc" target="_blank">
+					<em class="fa fa-twitter fa-3x"></em>
 				</a>
 			</div>
 		</div>
-		</div>
-	</body>
+	</div>
+</body>
+<script>
+	document.getElementsByClassName('rotateDivOuter')[0].addEventListener('mousemove',function(e){
+		var el = document.getElementsByClassName('rotateDivOuter')[0];
+
+		var x = e.pageX - el.offsetLeft;
+		var y = e.pageY - el.offsetTop;
+
+		var centerX = el.clientWidth / 2;
+		var centerY = el.clientHeight / 2;
+
+		var deltaX = x - centerX;
+		var deltaY = y - centerY;
+
+		var percentX = deltaX / centerX;
+		var percentY = deltaY / centerY;
+
+		var deg = 35;
+
+		document.getElementsByClassName('rotateDiv')[0].style.transform = 'rotateX(' + deg * -percentY + 'deg)' + 'rotateY(' + deg * percentX + 'deg)';
+	});
+	document.getElementsByClassName('rotateDivOuter')[0].addEventListener('mouseleave',function(e){
+		document.getElementsByClassName('rotateDiv')[0].style.transform = '';
+	});
+</script>
+
 </html>
