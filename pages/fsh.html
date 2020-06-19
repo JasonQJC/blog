@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>fsh</title>
+  <script src="https://ecomfe.github.io/echarts-liquidfill/dist/echarts.js"></script>
+  <script src="https://ecomfe.github.io/echarts-liquidfill/dist/echarts-liquidfill.js"></script>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .ec {
+      width: 95vw;height:95vh;
+      border-radius: 10px;
+      box-shadow: 0 0 30px 20px #ccc;
+    }
+    canvas {
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="main" class="ec"></div>
+</body>
+<script>
+  var myChart = echarts.init(document.getElementById('main'));
+  var waves = [{
+    value: 0.4,
+    valueSine: 0.1,
+    period: 5000,
+    amplitude: 120,
+    amplitudeSine: 100,
+    waveLength: '80%'
+  }, {
+    value: 0.42,
+    valueSine: 0.05,
+    period: 4000,
+    amplitude: 100,
+    amplitudeSine: 10,
+    waveLength: '40%'
+  }, {
+    value: 0.4,
+    valueSine: 0.05,
+    period: 1500,
+    amplitude: 50,
+    amplitudeSine: 10,
+    waveLength: '20%'
+  }, {
+    value: 0.4,
+    valueSine: 0.05,
+    period: 3000,
+    amplitude: 70,
+    amplitudeSine: 10,
+    waveLength: '60%'
+  }, {
+    value: 0.35,
+    valueSine: 0.05,
+    period: 2000,
+    amplitude: 60,
+    amplitudeSine: 10,
+    waveLength: '40%'
+  }, {
+    value: 0.3,
+    valueSine: 0.05,
+    period: 4000,
+    amplitude: 15,
+    amplitudeSine: 10,
+    waveLength: '20%'
+  }, {
+    value: 0.3,
+    valueSine: 0.05,
+    period: 1500,
+    amplitude: 60,
+    amplitudeSine: 10,
+    waveLength: '30%'
+  }];
+
+  var data = [];
+  var phases = [0, 0.6, 0.8];
+  var values = [1, 0.9, 0.85];
+  for (var w = 0; w < waves.length; ++w) {
+    for (var i = 0; i < 3; ++i) {
+      data.push({
+        value: waves[w].value * values[i],
+        amplitude: waves[w].amplitude,
+        phase: phases[i] + w,
+        period: waves[w].period * 4,
+        waveLength: waves[w].waveLength
+      });
+    }
+  }
+
+  var option = {
+    backgroundColor: new echarts.graphic.LinearGradient(
+      0, 0, 0, 1, [{
+        offset: 0,
+        color: '#f5820a'
+      }, {
+        offset: 0.1,
+        color: '#F56E0A'
+      }, {
+        offset: 0.5,
+        color: '#F14D0E'
+      },{
+        offset: 1,
+        color: '#B61117'
+      }]
+    ),
+    series: [{
+      radius: '220%',
+      color: ['#C8E7F8','#112643', '#081831'],
+      type: 'liquidFill',
+      shape: 'rect',
+      data: data,
+      animationDurationUpdate: 2000,
+      animationEasingUpdate: 'cubicInOut',
+      backgroundStyle: {
+        color: 'transparent'
+      },
+      outline: {
+        show: false
+      },
+      label: {
+        normal: {
+          textStyle: {
+            color: '#E1248',
+            fontSize: 72
+          },
+          formatter: function () {
+            return '';
+          }
+        }
+      }
+    }]
+  };
+  myChart.setOption(option);
+</script>
+
+</html>
