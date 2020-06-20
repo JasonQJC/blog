@@ -1,0 +1,39 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>url emoji animate</title>
+</head>
+
+<body>
+  <div style="display: flex;flex-direction: column;align-items: center;">
+    <h3>open this page in Guest Mode to avoid browser store too much browser history garbage</h3>
+    <button type="button" 
+        onclick="loop()"
+        style="background-color: white;
+        border-radius: 5px;
+        border: solid 1px;
+        border-color: #ccc;
+        height: 50px;
+        width: 100px;">
+      play url emoji animate
+    </button>
+  </div>
+  <script>
+    var e = ['👶🏻','👶🏼','👶🏽','👶🏾','👶🏿'];
+    function loop() {
+        var s = '',
+            i, m;
+        for (i = 0; i < 10; i ++) {
+            m = Math.floor(e.length * ((Math.sin((Date.now()/100) + i)+1)/2));
+            s += '👶' + e[m];
+        }
+
+        location.hash = s;
+
+        setTimeout(loop, 50);
+    }
+  </script>
+</body>
+
+</html>
