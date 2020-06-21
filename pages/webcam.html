@@ -1,0 +1,75 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .camcell {
+      height: 48px;
+      width: 64px;
+    }
+  </style>
+</head>
+
+<body>
+  <h3>MediaDevices.getUserMedia()</h3>
+  <p>
+    The MediaDevices.getUserMedia() method prompts the user for
+    permission to use a media input which produces a MediaStream
+    with tracks containing the requested types of media.
+    That stream can include, for example, a video track
+    (produced by either a hardware or virtual video source such as a camera,
+    video recording device, screen sharing service, and so forth), an audio track (similarly, produced by a physical or
+    virtual audio source like a microphone, A/D converter, or the like), and possibly other track types.
+  </p>
+  <h3>MediaDevices.getDisplayMedia()</h3>
+  <p>
+    Prompts the user to select a display or portion of a display (such as a window) to
+    capture as a MediaStream for sharing or recording purposes.
+    Returns a promise that resolves to a MediaStream.
+  </p>
+  <h3>canvas.getContext('2d').drawImage()</h3>
+  <p>
+    draw pic video or canvas on canvas
+  </p>
+  <div style="display: flex;align-items: center;justify-content: center;flex-direction: column;">
+    <div id="showCon" style="display: grid;grid-template-columns: repeat(30,64px);">
+      <video class="camcell"></video>
+    </div>
+  </div>
+  <script>
+    // Grab elements, create settings, etc.
+    var video = document.getElementsByClassName('camcell')[0];
+
+    // Get access to the camera!
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      // Not adding `{ audio: true }` since we only want video now
+      navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
+        //video.src = window.URL.createObjectURL(stream);
+        video.srcObject = stream;
+        video.onloadedmetadata = function () {
+          video.play();
+          setInterval(pushImg, 100);
+        };
+      });
+
+    }
+    let nowImgNum = 0;
+    function pushImg() {
+      let showCon = document.getElementById('showCon');
+      let cav = document.createElement('canvas');
+      cav.width = 64;
+      cav.height = 48;
+      let cavContext = cav.getContext('2d');
+      cavContext.drawImage(video, 0, 0, 640, 480, 0, 0, 64, 48);
+      video.parentNode.insertBefore(cav,video.nextSibling);
+      nowImgNum += 1;
+      if (nowImgNum >= 1000) {
+        showCon.removeChild(showCon.lastElementChild);
+      }
+    }
+  </script>
+</body>
+
+</html>
