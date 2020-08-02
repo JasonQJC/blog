@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    pre {
+      width: 50vw;
+      margin: 0 auto;
+      padding: 10px;
+      font-family: Microsoft YaHei;
+      border: 1px solid;
+      border-color: #EEE;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+  </style>
+</head>
+<body>
+<pre>
+
+  public final class Unchecked {
+    @FunctionalInterface
+    interface ExceptionFunction<T, R> {
+      R apply(T t) throws Exception;
+    }
+  
+    /**
+     * exception catcher need use e.getCause() to get original exception
+     */
+    public static <T, R> Function<T, R> wrap(ExceptionFunction<T, R> mapper) {
+      Objects.requireNonNull(mapper);
+      return t -> {
+        try {
+          return mapper.apply(t);
+        } catch (Exception e) {
+          throw new RuntimeException(e);
+        }
+      };
+    }
+  
+    public static <T, R> Function<T, R> wrap2(ExceptionFunction<T, R> mapper) {
+      Objects.requireNonNull(mapper);
+      return t -> {
+        try {
+          return mapper.apply(t);
+        } catch (Exception e) {
+          // !!! notice here
+          throwException(e);
+        }
+        return null;
+      };
+    }
+  
+    /**
+     * exception catcher don't need use e.getCause() to get original exception
+     */
+    @SuppressWarnings("unchecked")
+    public static <T extends Exception> void throwException(Exception e) throws T {
+      throw (T) e;
+    }
+  
+    /**
+     * One of the important thoughts in Functional propgramming is function is pure
+     * and no side effects. 
+     * So lambda don't throw exception, they deal with exceptions by themselves 
+     * but the code will looks ugly in java like this
+     */
+    @SuppressWarnings("rawtypes")
+    public static List<Class> findClasses1(List<String> names) {
+      return names.stream().map(className -> {
+        try {
+          return Class.forName(className);
+        } catch (ClassNotFoundException e) {
+          e.printStackTrace();
+        }
+        return null;
+      }).collect(Collectors.toList());
+    }
+  
+    /**
+     * the code looks better
+     */
+    @SuppressWarnings("rawtypes")
+    public static List<Class> findClasses2(List<String> names) {
+      return names.stream()
+      .map(Unchecked.wrap(className -> Class.forName(className)))
+      .collect(Collectors.toList());
+    }
+  
+    @SuppressWarnings("rawtypes")
+    public static List<Class> findClasses3(List<String> names) {
+      return names.stream()
+      .map(Unchecked.wrap2(className -> Class.forName(className)))
+      .collect(Collectors.toList());
+    }
+  
+    public static void main(String[] args) {
+      try {
+        findClasses2(new ArrayList<String>());
+      } catch (Exception e) {
+        // get original exception in this way
+        e.getCause().printStackTrace();
+      }
+      try {
+        findClasses3(new ArrayList<String>());
+      } catch (Exception e) {
+        // don't need e.getCause()
+        e.printStackTrace();
+      }
+    }
+  }
+</pre>
+</body>
+</html>
