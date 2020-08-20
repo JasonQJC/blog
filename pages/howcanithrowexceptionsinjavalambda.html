@@ -28,16 +28,16 @@
   
   public final class Unchecked {
     @FunctionalInterface
-    interface ExceptionFunction<T, R> {
+    interface ExceptionFunction&lt;T, R&gt; {
       R apply(T t) throws Exception;
     }
   
     /**
      * exception catcher need use e.getCause() to get original exception
      */
-    public static <T, R> Function<T, R> wrap(ExceptionFunction<T, R> mapper) {
+    public static &lt;T, R&gt; Function&lt;T, R&gt; wrap(ExceptionFunction&lt;T, R&gt; mapper) {
       Objects.requireNonNull(mapper);
-      return t -> {
+      return t -&gt; {
         try {
           return mapper.apply(t);
         } catch (Exception e) {
@@ -46,9 +46,9 @@
       };
     }
   
-    public static <T, R> Function<T, R> wrap2(ExceptionFunction<T, R> mapper) {
+    public static &lt;T, R&gt; Function&lt;T, R&gt; wrap2(ExceptionFunction&lt;T, R&gt; mapper) {
       Objects.requireNonNull(mapper);
-      return t -> {
+      return t -&gt; {
         try {
           return mapper.apply(t);
         } catch (Exception e) {
@@ -63,7 +63,7 @@
      * exception catcher don't need use e.getCause() to get original exception
      */
     @SuppressWarnings("unchecked")
-    public static <T extends Exception> void throwException(Exception e) throws T {
+    public static &lt;T extends Exception&gt; void throwException(Exception e) throws T {
       throw (T) e;
     }
   
@@ -73,8 +73,8 @@
      * exceptions by themselves but the code will looks ugly in java like this
      */
     @SuppressWarnings("rawtypes")
-    public static List<Class> findClasses1(List<String> names) {
-      return names.stream().map(className -> {
+    public static List&lt;Class&gt; findClasses1(List&lt;String&gt; names) {
+      return names.stream().map(className -&gt; {
         try {
           return Class.forName(className);
         } catch (ClassNotFoundException e) {
@@ -88,25 +88,29 @@
      * code looks good
      */
     @SuppressWarnings("rawtypes")
-    public static List<Class> findClasses2(List<String> names) {
-      return names.stream().map(Unchecked.wrap(className -> Class.forName(className))).collect(Collectors.toList());
+    public static List&lt;Class&gt; findClasses2(List&lt;String&gt; names) {
+      return names.stream()
+        .map(Unchecked.wrap(className -&gt; Class.forName(className)))
+        .collect(Collectors.toList());
     }
   
     @SuppressWarnings("rawtypes")
-    public static List<Class> findClasses3(List<String> names) {
-      return names.stream().map(Unchecked.wrap2(className -> Class.forName(className))).collect(Collectors.toList());
+    public static List&lt;Class&gt; findClasses3(List&lt;String&gt; names) {
+      return names.stream()
+      .map(Unchecked.wrap2(className -&gt; Class.forName(className)))
+      .collect(Collectors.toList());
     }
   
     public static void main(String[] args) {
       try {
-        findClasses2(new ArrayList<String>());
+        findClasses2(new ArrayList&lt;String&gt;());
       } catch (Exception e) {
         // get original exception in this way
         e.getCause().printStackTrace();
       }
   
       try {
-        findClasses3(new ArrayList<String>());
+        findClasses3(new ArrayList&lt;String&gt;());
       } catch (Exception e) {
         // don't need e.getCause()
         e.printStackTrace();
