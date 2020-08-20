@@ -18,7 +18,14 @@
 </head>
 <body>
 <pre>
+  package createanddestory;
 
+  import java.util.ArrayList;
+  import java.util.List;
+  import java.util.Objects;
+  import java.util.function.Function;
+  import java.util.stream.Collectors;
+  
   public final class Unchecked {
     @FunctionalInterface
     interface ExceptionFunction<T, R> {
@@ -62,9 +69,8 @@
   
     /**
      * One of the important thoughts in Functional propgramming is function is pure
-     * and no side effects. 
-     * So lambda don't throw exception, they deal with exceptions by themselves 
-     * but the code will looks ugly in java like this
+     * and no side effects. So lambda don't throw exception, they deal with
+     * exceptions by themselves but the code will looks ugly in java like this
      */
     @SuppressWarnings("rawtypes")
     public static List<Class> findClasses1(List<String> names) {
@@ -79,20 +85,16 @@
     }
   
     /**
-     * the code looks better
+     * code looks good
      */
     @SuppressWarnings("rawtypes")
     public static List<Class> findClasses2(List<String> names) {
-      return names.stream()
-      .map(Unchecked.wrap(className -> Class.forName(className)))
-      .collect(Collectors.toList());
+      return names.stream().map(Unchecked.wrap(className -> Class.forName(className))).collect(Collectors.toList());
     }
   
     @SuppressWarnings("rawtypes")
     public static List<Class> findClasses3(List<String> names) {
-      return names.stream()
-      .map(Unchecked.wrap2(className -> Class.forName(className)))
-      .collect(Collectors.toList());
+      return names.stream().map(Unchecked.wrap2(className -> Class.forName(className))).collect(Collectors.toList());
     }
   
     public static void main(String[] args) {
@@ -102,13 +104,16 @@
         // get original exception in this way
         e.getCause().printStackTrace();
       }
+  
       try {
         findClasses3(new ArrayList<String>());
       } catch (Exception e) {
         // don't need e.getCause()
         e.printStackTrace();
       }
+  
     }
+  
   }
 </pre>
 </body>

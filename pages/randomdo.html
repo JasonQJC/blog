@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What things to do</title>
+</head>
+<style>
+  .con {
+    width: fit-content;
+    margin: 0 auto;
+    padding: 30px;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.06);
+    display: grid;
+    grid-template-columns: repeat(3,100px);
+    grid-row-gap: 10px;
+    grid-column-gap: 10px;
+    justify-content: center;
+  }
+  .item {
+    background-color: #999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+  }
+  .hit {
+    background-color: deeppink;
+  }
+  .btn {
+    background-color: gold;
+    border: 1px solid goldenrod;
+    border-radius: 5px;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.06);
+    width: 100px;
+    height: 60px;
+    margin: 0 auto;
+    display: block;
+    margin-top: 30px;
+  }
+  .btn:active {
+    background-color: #d39e00;
+    border-color: #c69500;
+  }
+  .btn:focus {
+    box-shadow: 0 0 0 0.2rem rgba(222,170,12,.5);
+    outline: 0;
+  }
+</style>
+<body>
+  <div class="con">
+    <div class="item">algorithm book</div>
+    <div class="item">scheme book</div>
+    <div class="item">SICP</div>
+    <div class="item">blog</div>
+    <div class="item">online doc</div>
+    <div class="item">emacs</div>
+    <div class="item">python</div>
+    <div class="item">architec video</div>
+    <div class="item">bigdata video</div>
+  </div>
+  <button type="button" class="btn" onclick="rand()">random</button>
+  <script>
+    function rand() {
+      const hit = document.querySelector(".con .hit");
+      if(hit) {
+        hit.classList.remove("hit");
+      }
+      const items = document.querySelectorAll(".con .item");
+      const len = items.length;
+      const order = parseInt(Math.random() * len);
+      items[order].classList.add("hit");
+    }
+  </script>
+</body>
+</html>
