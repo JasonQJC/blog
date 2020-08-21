@@ -67,14 +67,36 @@
   <button type="button" class="btn" onclick="rand()">random</button>
   <script>
     function rand() {
+      removeHit();
+      const order = genResult();
+      const temRound = parseInt((Math.random()+1) * 10 * 10);
+      const round = temRound - temRound % order;
+      const items = document.querySelectorAll(".con .item");
+      let i = 0;
+      let it = setInterval(function(){
+        removeHit();
+        if(i >= items.length) {
+          items[i%items.length].classList.add("hit");
+        }else {
+          items[i].classList.add("hit");
+        }
+        i++;
+        if(i == round) {
+          clearInterval(it);
+        }
+      },150);
+    }
+    function removeHit() {
       const hit = document.querySelector(".con .hit");
       if(hit) {
         hit.classList.remove("hit");
       }
+    }
+    function genResult() {
       const items = document.querySelectorAll(".con .item");
       const len = items.length;
       const order = parseInt(Math.random() * len);
-      items[order].classList.add("hit");
+      return order;
     }
   </script>
 </body>
