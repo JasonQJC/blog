@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>strategypattern</title>
+</head>
+<body>
+  <div class="con">
+    <h2>What we called "strategy pattern" is capsule some statements into a function and passing them.</h2>
+    <pre>
+      public class Test {
+        public static void main(String[] args) {
+            String testStr = "test";
+            // bad code smell we all agree
+            if("aaa".equals(testStr)) {
+                // case aaa , state1
+                // case aaa , state2
+                // ...
+            } else if("bbb".equals(testStr)) {
+                // case bbb , state1
+                // case bbb , state2
+                // ...
+            } else {
+                // case other , state1
+                // case other , state2
+            }
+            // no different compare to above code
+            switch (testStr) {
+                case "aaa":
+                    // case aaa , state1
+                    // case aaa , state2
+                    // ...
+                    break;
+                case "bbb":
+                    // case bbb , state1
+                    // case bbb , state2
+                    // ...
+                    break;
+                default:
+                    // case other , state1
+                    // case other , state2
+                    break;
+            }
+    
+            // craete different case instance by testStr and execute capsuled statements
+            // statements are splited in to didderent classes
+            CaseFather.create(testStr).doSomething();
+    
+            // ioc and functional style
+            // @AutoWired
+            // Map<String, Function<String,Void>> testStrAndCaseImplFunctionMap;
+            // get no name impl class , and apply ( run it )
+            // testStrAndCaseImplFunctiomMap.get(testStr+"Fun").apply(testStr);
+            
+            // inject code
+            // @Component
+            // class TestStrAndCaseImplFunctionInjector {
+            //   @Bean("aaaFun")
+            //   public Function<String,Void> testStrAndCaseImplFunctionMap() {
+            //   no need create class , just create no name class
+            //     return (testStr) -> {
+            //       case aaa , state1
+            //       case aaa , state2
+            //       ...
+            //     }
+            //   }
+            // }
+        }
+    
+        interface CaseFather {
+            static CaseFather create(String testStr) {
+                if("aaa".equals(testStr)) {
+                    return new CaseA();
+                } else if("bbb".equals(testStr)) {
+                    return new CaseB();
+                } else {
+                    return new CaseDefault();
+                }
+            }
+    
+            void doSomething();
+        }
+    
+        static class CaseA implements CaseFather {
+            @Override
+            public void doSomething() {
+                System.out.println("case aaa");
+            }
+        }
+    
+        static class CaseB implements CaseFather {
+            @Override
+            public void doSomething() {
+                System.out.println("case bbb");
+            }
+        }
+    
+        static class CaseDefault implements CaseFather {
+            @Override
+            public void doSomething() {
+                System.out.println("case other");
+            }
+        }
+      }
+    </pre>
+    2022-05-29 05:50am
+  </div>
+</body>
+</html>
+<style>
+  .con {
+    width: 50vw;
+    min-width: 440px;
+    margin: 0 auto;
+    padding: 10px;
+    font-family: Microsoft YaHei;
+    border: 1px solid;
+    border-color: #EEE;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.06);
+    border-radius: 6px;
+  }
+  @media screen and (max)
+</style>
